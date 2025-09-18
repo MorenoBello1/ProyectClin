@@ -1,0 +1,19 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss'],
+  standalone: false
+})
+export class MenuComponent  implements OnInit {
+
+  constructor() { }
+   isCollapsed = false;
+
+  toggleMenu() {
+    this.isCollapsed = !this.isCollapsed;
+  } 
+  ngOnInit() {}
+
+}

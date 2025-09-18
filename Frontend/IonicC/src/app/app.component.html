@@ -1,3 +1,54 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- Menú lateral -->
+  <ion-menu side="start" menuId="main-menu" contentId="main-content" [class.collapsed]="isCollapsed">
+    <ion-content>
+       <ion-list>
+        <ng-container *ngFor="let item of menuItems"> 
+          <!-- recorremos los menu -->
+
+          <!-- Item principal -->
+           <!-- // Si no tiene hijos, es un enlace directo  comolo sabemos con el item.hijoslength es 0 se muestra  -->
+          <ion-item button *ngIf="!item.hijos?.length" [routerLink]="item.url" (click)="cerrarMenu()">
+            <ion-icon slot="start" [name]="item.icono"></ion-icon>
+            <ion-label>{{ item.titulo }}</ion-label>
+          </ion-item>
+
+          <!-- Si tiene hijos, es un menú desplegable por ende ya no hago uso de routerlink por uqe sus hijos y atienen-->
+          <ng-container *ngIf="item.hijos?.length">
+
+            <ion-item button (click)="toggle(item)"> <!-- toggle es para abrir y cerrar el submenu -->
+              <ion-icon slot="start" [name]="item.icono"></ion-icon>
+              <ion-label>{{ item.titulo }}</ion-label>
+              <ion-icon slot="end" [name]="item.open ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            </ion-item>
+            
+            <!-- Sub-items -->
+            <ion-list *ngIf="item.open" class="sub-menu">
+              <ion-item button *ngFor="let sub of item.hijos" [routerLink]="sub.url" (click)="cerrarMenu()">
+                <ion-icon slot="start" [name]="sub.icono"></ion-icon>
+                <ion-label>{{ sub.titulo }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ng-container>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+  <!-- Contenido principal -->
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-menu-button menu="main-menu"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>ProyectClin</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <router-outlet></router-outlet>
+    </ion-content>
+  </div>
 </ion-app>
