@@ -48,6 +48,43 @@ class base{
       });   
    });
    }
+   agruparDatos(array, claveId, clavePadre) {
+      const map = new Map();
+      const resultado = [];
+
+      // Clonamos los objetos y agregamos la propiedad 'hijos'
+      array.forEach(item => {
+         map.set(item[claveId], Object.assign({}, item, { hijos: [] }));
+      });
+
+      // Armamos la jerarquía+
+      let i=1
+      array.forEach(item => {
+         const id = item[claveId];
+         const padreId = item[clavePadre];
+            console.log(`vuelta ${i++}`)
+            console.log(id,'id itemclaveid hij')
+            console.log(padreId,'id padreid padreid del hijo')
+         if (padreId != null) {
+            console.log('entro al if padreid no es null')
+            const padre = map.get(padreId);
+            console.log(padre,'padre mediante padreid del hijo')
+            if (padre) {
+               console.log('entro al if padre existe')
+               console.log(map.get(id),'hijo que se va a agregar al padre')
+               padre.hijos.push(map.get(id));
+            }
+         } else {
+            console.log('entro al else padreid es null')
+            resultado.push(map.get(id));
+            console.log(map.get(id),'x que se va a agregar al resultado')
+         }
+      });
+
+      return resultado;
+      }
+
+
 
 }
 
@@ -61,6 +98,7 @@ class base{
 //  return token
 // }
    
+
 
 
 
