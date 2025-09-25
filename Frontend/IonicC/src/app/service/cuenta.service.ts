@@ -7,12 +7,15 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class CuentaService {
 
-   private https = inject(HttpClient); // http para hacer peticiones se llama injeccion de dependencias
-   private url = environment.url + '/vistas'; // obtienes el environment de environment.prod.ts 
+   private http = inject(HttpClient); // http para hacer peticiones se llama injeccion de dependencias
+   private url = environment.url + '/vistas';  
    // para obtener la url 
 
-  //metodo para obtener las vistas de la cuenta principal por ahora sin headers
+
    getVistasCuenta(): Promise<any> {
-    return this.https.get(this.url).toPromise();
+    return this.http.get(this.url).toPromise();
    }
+
+  
+
 }
